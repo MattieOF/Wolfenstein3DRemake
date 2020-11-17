@@ -10,6 +10,8 @@ public class TilePalette : MonoBehaviour
     public GameObject itemPrefab;
     
     private TileInfo[] tiles;
+    private TileInfo selectedTile;
+    private TilePaletteItem selectedItem;
 
     void Start()
     {
@@ -24,6 +26,17 @@ public class TilePalette : MonoBehaviour
         {
             GameObject go = Instantiate(itemPrefab, contentParent);
             go.GetComponent<RawImage>().texture = tile.texture;
+            TilePaletteItem item = go.GetComponent<TilePaletteItem>();
+            item.tileInfo = tile;
+            item.tilePalette = this;
         }
+    }
+
+    public void SelectTile(TilePaletteItem item)
+    {
+        if (selectedItem == item) return;
+        if (selectedItem) selectedItem.Deselect();
+        selectedItem = item;
+        selectedTile = selectedItem.tileInfo;
     }
 }

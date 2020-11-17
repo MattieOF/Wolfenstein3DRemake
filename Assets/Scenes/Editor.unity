@@ -693,7 +693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentParent: {fileID: 698501537}
-  itemPrefab: {fileID: 8199166907302770219, guid: 0cd0670b6aad0a0438c0228a44a3ac5e, type: 3}
+  itemPrefab: {fileID: 2674519505062207011, guid: 0cd0670b6aad0a0438c0228a44a3ac5e, type: 3}
 --- !u!114 &368735161
 MonoBehaviour:
   m_ObjectHideFlags: 0
