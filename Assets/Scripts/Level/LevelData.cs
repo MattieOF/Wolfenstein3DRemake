@@ -16,7 +16,7 @@ public class LevelData
         return tiles[x, y];
     }
 
-    public bool IsTileAt(int x, int y)
+    public bool TileExistsAt(int x, int y)
     {
         return tiles[x, y] != null;
     }
