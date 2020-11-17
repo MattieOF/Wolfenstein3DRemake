@@ -18,8 +18,6 @@ public class LevelNameControl : MonoBehaviour
     public Color hoveredBackgroundColour;
     public string levelName = "Untitled level";
 
-    private bool input = false;
-
     void Start()
     {
         nameInputField.text = levelName;
@@ -27,7 +25,6 @@ public class LevelNameControl : MonoBehaviour
 
     public void StartInput()
     {
-        input = true;
         cameraControl.acceptInput = false;
         nameInputObject.SetActive(true);
         nameTextObject.SetActive(false);
@@ -35,7 +32,6 @@ public class LevelNameControl : MonoBehaviour
 
     public void EndInput()
     {
-        input = false;
         cameraControl.acceptInput = true;
         nameText.text = nameInputField.text;
         // TODO Update level name
