@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
+[AddComponentMenu("Camera/Single Axis Mouselook")]
 public class PlayerMouseLook : MonoBehaviour
 {
     Vector2 rotation = new Vector2(0, 0);
     [Header("References")]
     public GameObject player;
     [Header("Properties")]
-    public float speed = 3;
+    public float sensitivity = 3;
 
     private bool cursorLocked = true;
 
@@ -22,8 +23,8 @@ public class PlayerMouseLook : MonoBehaviour
         if (cursorLocked)
         {
             rotation.y += Input.GetAxis("Mouse X");
-            player.transform.eulerAngles = (Vector2)rotation * speed;
-            transform.eulerAngles = (Vector2)rotation * speed;
+            player.transform.eulerAngles = (Vector2)rotation * sensitivity;
+            transform.eulerAngles = (Vector2)rotation * sensitivity;
         }
 
         //if (Input.GetKeyDown(KeyCode.Escape) && cursorLocked)

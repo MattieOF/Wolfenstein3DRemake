@@ -4560,7 +4560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2005192194}
-  speed: 3
+  sensitivity: 3
 --- !u!114 &2005192202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4573,7 +4573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439c0bc92951d7c48897bf7bd542fe44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 5
   gravity: 0
   acceptInput: 1
 --- !u!1 &2024089487
