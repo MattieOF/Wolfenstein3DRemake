@@ -3,7 +3,7 @@
 [Serializable]
 public class LevelData
 {
-    public string name;
+    public string name = "Untitled Level";
     public TileInfo[,] tiles;
 
     public LevelData(int xSize, int ySize)

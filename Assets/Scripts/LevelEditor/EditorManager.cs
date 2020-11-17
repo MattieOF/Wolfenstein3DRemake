@@ -8,15 +8,26 @@ public class EditorManager : MonoBehaviour
     [Header("Scene References")]
     public GameObject saveFirstObject;
 
-    [Header("Level Properties")]
-    public string levelName = "Untitled level";
+    // [Header("Level Properties")]
+    public string LevelName
+    {
+        get { return level.name; }
+        set { level.name = value; }
+    }
 
     [Header("Properties")]
     public string menuSceneName = "Game";
 
+    private LevelData level = new LevelData(100, 100);
+
     void Start()
     {
         saveFirstObject.SetActive(false);
+    }
+
+    public void SetName(string name)
+    {
+        level.name = name;
     }
 
     public void Save()

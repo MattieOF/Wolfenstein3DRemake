@@ -16,11 +16,12 @@ public class LevelNameControl : MonoBehaviour
     [Header("Properties")]
     public Color defaultBackgroundColour;
     public Color hoveredBackgroundColour;
-    public string levelName = "Untitled level";
+    // public string levelName = "Untitled level";
 
     void Start()
     {
-        nameInputField.text = levelName;
+        nameText.text = editorManager.LevelName;
+        nameInputField.text = editorManager.LevelName;
     }
 
     public void StartInput()
@@ -35,7 +36,7 @@ public class LevelNameControl : MonoBehaviour
         cameraControl.acceptInput = true;
         nameText.text = nameInputField.text;
         // TODO Update level name
-        editorManager.levelName = nameInputField.text;
+        editorManager.LevelName = nameInputField.text;
         nameInputObject.SetActive(false);
         nameTextObject.SetActive(true);
     }
