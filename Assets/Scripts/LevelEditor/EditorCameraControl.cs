@@ -14,6 +14,7 @@ public class EditorCameraControl : MonoBehaviour
     public float zoomAmount = 3f;
     public float moveSpeed = 2f;
     public bool acceptInput = true;
+    public bool allowScroll = true;
     public EditorCameraProjection projection = EditorCameraProjection.Perspective;
 
     [Header("Keybinds")]
@@ -55,7 +56,7 @@ public class EditorCameraControl : MonoBehaviour
     // Perform camera movement here
     void FixedUpdate()
     {
-        if (mouseWheel != 0)
+        if (mouseWheel != 0 && allowScroll)
         {
             if (projection == EditorCameraProjection.Orthrographic)
             {
@@ -83,5 +84,15 @@ public class EditorCameraControl : MonoBehaviour
         vertical = 0;
         horizontal = 0;
         mouseWheel = 0;
+    }
+
+    public void DisableScroll()
+    {
+        allowScroll = false;
+    }
+
+    public void EnableScroll()
+    {
+        allowScroll = true;
     }
 }
