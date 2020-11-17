@@ -5,7 +5,7 @@ using UnityEngine;
 public enum EditorCameraProjection
 {
     Perspective,
-    Orthrographic
+    Orthographic
 }
 
 public class EditorCameraControl : MonoBehaviour
@@ -26,7 +26,7 @@ public class EditorCameraControl : MonoBehaviour
 
     void Start()
     {
-        if (projection == EditorCameraProjection.Orthrographic) GetComponent<Camera>().orthographic = true;
+        if (projection == EditorCameraProjection.Orthographic) GetComponent<Camera>().orthographic = true;
         else GetComponent<Camera>().orthographic = false;
     }
 
@@ -41,13 +41,13 @@ public class EditorCameraControl : MonoBehaviour
 
         if (Input.GetKeyDown(toggleProjection))
         {
-            if (projection == EditorCameraProjection.Orthrographic)
+            if (projection == EditorCameraProjection.Orthographic)
             {
                 projection = EditorCameraProjection.Perspective;
                 GetComponent<Camera>().orthographic = false;
             } else
             {
-                projection = EditorCameraProjection.Orthrographic;
+                projection = EditorCameraProjection.Orthographic;
                 GetComponent<Camera>().orthographic = true;
             }
         }
@@ -58,7 +58,7 @@ public class EditorCameraControl : MonoBehaviour
     {
         if (mouseWheel != 0 && allowScroll)
         {
-            if (projection == EditorCameraProjection.Orthrographic)
+            if (projection == EditorCameraProjection.Orthographic)
             {
                 GetComponent<Camera>().orthographicSize += zoomAmount * -mouseWheel * 0.5f;
             }
