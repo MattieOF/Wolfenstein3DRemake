@@ -11,6 +11,7 @@ public class LevelNameControl : MonoBehaviour
     public TMP_InputField nameInputField;
     public EditorCameraControl cameraControl;
     public Image background;
+    public EditorManager editorManager;
 
     [Header("Properties")]
     public Color defaultBackgroundColour;
@@ -38,6 +39,7 @@ public class LevelNameControl : MonoBehaviour
         cameraControl.acceptInput = true;
         nameText.text = nameInputField.text;
         // TODO Update level name
+        editorManager.levelName = nameInputField.text;
         nameInputObject.SetActive(false);
         nameTextObject.SetActive(true);
     }
