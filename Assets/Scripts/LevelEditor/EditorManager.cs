@@ -132,7 +132,6 @@ public class EditorManager : MonoBehaviour
 
     public void PlaceTile(Vector3 location)
     {
-
         if (tilePalette.selectedTile == null) return;
         if (level.TileExistsAt((int)location.x, (int)location.z)) return;
         level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
@@ -147,6 +146,8 @@ public class EditorManager : MonoBehaviour
 
     public void RemoveTile(Vector3 location)
     {
+        Debug.Log("called");
+
         if (!level.TileExistsAt((int)location.x, (int)location.z)) return;
         level.RemoveTileAt((int)location.x, (int)location.z);
 
