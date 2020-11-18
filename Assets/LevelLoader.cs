@@ -66,12 +66,12 @@ public class LevelLoader : MonoBehaviour
             }
         }
 
-        if (level.playerPosition != Vector3.one * -1)
-        {
-            playerObject.transform.position = level.playerPosition;
-        } else
+        if (level.playerPosition == Vector3.one * -1)
         {
             playerObject.transform.position = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
+        } else
+        {
+            playerObject.transform.position = level.playerPosition;
         }
 
         mapInfoPanel.SetValues(level.name, tilesCount, enemyCount);
