@@ -10,6 +10,12 @@ public class MenuButtons : MonoBehaviour
 
     public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu;
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Quit();
+    }
+
     public void Rise()
     {
         TweenY.Add(gameObject, tweenTime, 250).EaseInOutSine();
