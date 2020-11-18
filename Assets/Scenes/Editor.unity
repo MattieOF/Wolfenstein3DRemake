@@ -466,6 +466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFirstObject: {fileID: 2010808496}
+  tilePalette: {fileID: 368735160}
+  tilePrefab: {fileID: 64307637970032421, guid: d05dc1ebfb625f144addf43e51052553, type: 3}
   menuSceneName: Game
 --- !u!1 &350309364
 GameObject:
@@ -693,6 +695,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentParent: {fileID: 698501537}
   itemPrefab: {fileID: 2674519505062207011, guid: 0cd0670b6aad0a0438c0228a44a3ac5e, type: 3}
+  selectedTile: {fileID: 0}
+  selectedItem: {fileID: 0}
 --- !u!114 &368735161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,6 +1837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   editorCamera: {fileID: 751851095}
+  editorManager: {fileID: 279552242}
 --- !u!1 &663375983
 GameObject:
   m_ObjectHideFlags: 0

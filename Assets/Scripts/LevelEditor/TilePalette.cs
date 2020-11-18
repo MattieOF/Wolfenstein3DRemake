@@ -10,8 +10,8 @@ public class TilePalette : MonoBehaviour
     public GameObject itemPrefab;
     
     private TileInfo[] tiles;
-    private TileInfo selectedTile;
-    private TilePaletteItem selectedItem;
+    public TileInfo selectedTile;
+    public TilePaletteItem selectedItem;
 
     void Start()
     {
