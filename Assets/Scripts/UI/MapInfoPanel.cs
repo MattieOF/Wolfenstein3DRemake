@@ -41,6 +41,8 @@ public class MapInfoPanel : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("Menu");
         }
 
