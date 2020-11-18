@@ -19,6 +19,11 @@ public class EditorManager : MonoBehaviour
     [Header("Asset References")]
     public GameObject tilePrefab;
 
+    [HideInInspector]
+    public static bool loadLevelOnStart = false;
+    [HideInInspector]
+    public static string levelToLoadOnStart = "";
+
     private List<GameObject> objects = new List<GameObject>();
 
     // [Header("Level Properties")]
@@ -37,6 +42,16 @@ public class EditorManager : MonoBehaviour
     {
         saveFirstObject.SetActive(false);
         levelLoadInputObject.SetActive(false);
+        if (loadLevelOnStart)
+        {
+            LoadLevel(levelToLoadOnStart);
+        }
+    }
+
+    public static bool LevelExists(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        return File.Exists(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml");
     }
 
     public void SetName(string name)

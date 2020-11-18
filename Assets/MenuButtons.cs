@@ -2,13 +2,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Uween;
+using TMPro;
 
 public class MenuButtons : MonoBehaviour
 {
+    [Header("Properties")]
     public bool hasRisen = false;
     public float tweenTime = 0.2f;
 
-    public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu;
+    [Header("Scene References")]
+    public TMP_InputField levelToLoadInput;
+    public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound;
+
+    void Start()
+    {
+        levelNotFound.SetActive(false);
+    }
 
     void Update()
     {
@@ -63,6 +72,20 @@ public class MenuButtons : MonoBehaviour
 
     public void OpenEditor()
     {
+        Fadeout();
+        StartCoroutine(LoadSceneAfterDelay(0.45f, "Editor"));
+    }
+
+    public void LoadLevelInEditor()
+    {
+        if (!EditorManager.LevelExists(levelToLoadInput.text))
+        {
+            levelNotFound.SetActive(true);
+            return;
+        }
+
+        EditorManager.loadLevelOnStart = true;
+        EditorManager.levelToLoadOnStart = levelToLoadInput.text;
         Fadeout();
         StartCoroutine(LoadSceneAfterDelay(0.45f, "Editor"));
     }
