@@ -8,6 +8,9 @@ public class SelectionBox : MonoBehaviour
     public Camera editorCamera;
     public EditorManager editorManager;
 
+    [Header("Properties")]
+    public bool allowPlace = true;
+
     void Update()
     {
         Ray ray = editorCamera.ScreenPointToRay(Input.mousePosition);
@@ -19,10 +22,10 @@ public class SelectionBox : MonoBehaviour
             roundedLoc = new Vector3(Mathf.FloorToInt(rayHit.point.x + 0.5f), 1, Mathf.FloorToInt(rayHit.point.z + 0.5f));
             transform.position = roundedLoc;
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && allowPlace)
             {
                 editorManager.PlaceTile(roundedLoc);
-            } else if (Input.GetMouseButton(1))
+            } else if (Input.GetMouseButton(1) && allowPlace)
             {
                 editorManager.RemoveTile(roundedLoc);
             }
@@ -31,4 +34,8 @@ public class SelectionBox : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = false;
         }
     }
+
+    public void EnablePlacement() { allowPlace = true; }
+
+    public void DisablePlacement() { allowPlace = false; }
 }

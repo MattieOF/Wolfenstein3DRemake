@@ -27,6 +27,7 @@ public class LevelNameControl : MonoBehaviour
     public void StartInput()
     {
         cameraControl.acceptInput = false;
+        cameraControl.ResetInput();
         nameInputObject.SetActive(true);
         nameTextObject.SetActive(false);
     }
@@ -35,7 +36,6 @@ public class LevelNameControl : MonoBehaviour
     {
         cameraControl.acceptInput = true;
         nameText.text = nameInputField.text;
-        // TODO Update level name
         editorManager.LevelName = nameInputField.text;
         nameInputObject.SetActive(false);
         nameTextObject.SetActive(true);
@@ -49,6 +49,12 @@ public class LevelNameControl : MonoBehaviour
     public void MouseExit()
     {
         background.color = defaultBackgroundColour;
+    }
+
+    public void SetName(string name)
+    {
+        nameText.text = name;
+        nameInputField.text = name;
     }
 
 }

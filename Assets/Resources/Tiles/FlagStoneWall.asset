@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e52042392fa87a458d536cce2b768ca, type: 3}
   m_Name: FlagStoneWall
   m_EditorClassIdentifier: 
-  texture: {fileID: 2800000, guid: 592721d95173b74488f6a654a66da862, type: 3}
+  textureName: tile004
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e52042392fa87a458d536cce2b768ca, type: 3}
   m_Name: HitlerStoneWall
   m_EditorClassIdentifier: 
-  texture: {fileID: 2800000, guid: aa36f325dc6be9145ae6d45e17cf8725, type: 3}
+  textureName: tile006
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}
