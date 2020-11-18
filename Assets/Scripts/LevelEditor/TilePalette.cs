@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum SpecialTiles
+{
+    PlayerStart
+}
+
 public class TilePalette : MonoBehaviour
 {
     [Header("Scene References")]
@@ -38,6 +43,7 @@ public class TilePalette : MonoBehaviour
         if (selectedItem == item) return;
         if (selectedItem) selectedItem.Deselect();
         selectedItem = item;
-        selectedTile = selectedItem.tileInfo;
+        if (!selectedItem.specialTile)
+            selectedTile = selectedItem.tileInfo;
     }
 }

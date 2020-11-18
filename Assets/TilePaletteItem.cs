@@ -9,6 +9,8 @@ public class TilePaletteItem : MonoBehaviour
 
     [Header("Properties")]
     public TileInfo tileInfo;
+    public bool specialTile = false;
+    public SpecialTiles specialTileType;
 
     void Start()
     {

@@ -18,6 +18,7 @@ public class EditorManager : MonoBehaviour
 
     [Header("Asset References")]
     public GameObject tilePrefab;
+    public GameObject playerTilePrefab;
 
     [HideInInspector]
     public static bool loadLevelOnStart = false;
@@ -121,6 +122,13 @@ public class EditorManager : MonoBehaviour
                 }
             }
         }
+
+        if (level.playerPosition != Vector3.one * -1)
+        {
+            GameObject go = Instantiate(playerTilePrefab);
+            go.transform.position = level.playerPosition;
+            objects.Add(go);
+        }
     }
 
     public void ClearEditor()
@@ -145,26 +153,56 @@ public class EditorManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
+    public void RemovePlayerTile()
+    {
+        GameObject go = GameObject.FindGameObjectWithTag("Player");
+        if (go)
+        {
+            objects.Remove(go);
+            Destroy(go);
+        }
+    }
+
     public void PlaceTile(Vector3 location)
     {
-        if (tilePalette.selectedTile == null) return;
+        if (tilePalette.selectedTile == null && !tilePalette.selectedItem.specialTile) return;
         if (level.TileExistsAt((int)location.x, (int)location.z)) return;
-        level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
+        if (level.playerPosition == location) return;
 
-        // Debug.Log("Placing tile at " + location);
+        if (tilePalette.selectedItem.specialTile)
+        {
+            switch (tilePalette.selectedItem.specialTileType)
+            {
+                case SpecialTiles.PlayerStart:
+                    if (level.playerPosition == location) return;
+                    RemovePlayerTile();
+                    level.playerPosition = location;
+                    GameObject go = Instantiate(playerTilePrefab);
+                    go.transform.position = location;
+                    objects.Add(go);
+                    break;
+            }
+        } else
+        {
+            level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
 
-        GameObject go = Instantiate(tilePrefab);
-        go.transform.position = location;
-        go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedTile.texture);
-        objects.Add(go);
+            GameObject go = Instantiate(tilePrefab);
+            go.transform.position = location;
+            go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedTile.texture);
+            objects.Add(go);
+        }
     }
 
     public void RemoveTile(Vector3 location)
     {
-        Debug.Log("called");
-
-        if (!level.TileExistsAt((int)location.x, (int)location.z)) return;
-        level.RemoveTileAt((int)location.x, (int)location.z);
+        if (level.playerPosition == location)
+        {
+            level.playerPosition = Vector3.one * -1;
+        } else
+        {
+            if (!level.TileExistsAt((int)location.x, (int)location.z)) return;
+            level.RemoveTileAt((int)location.x, (int)location.z);
+        }
 
         Collider[] colliders = Physics.OverlapSphere(location, 0.2f);
         if (colliders.Length != 0)
@@ -172,9 +210,11 @@ public class EditorManager : MonoBehaviour
             foreach (Collider collider in colliders)
             {
                 // TODO - MANAGE PLAYER START REMOVED
-                if (collider.tag != "Tile") continue;
-                objects.Remove(collider.gameObject);
-                Destroy(collider.gameObject);
+                if (collider.tag == "Tile" || collider.tag == "Player")
+                {
+                    objects.Remove(collider.gameObject);
+                    Destroy(collider.gameObject);
+                }
             }
         }
         else return;

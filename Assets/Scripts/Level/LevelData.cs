@@ -6,7 +6,7 @@ public class LevelData
 {
     public string name = "Untitled Level";
     public TileInfo[][] tiles;
-    public Vector3 playerPosition;
+    public Vector3 playerPosition = new Vector3(-1, -1, -1);
     public Vector2 levelSize;
 
     public LevelData()
