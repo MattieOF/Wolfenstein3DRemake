@@ -9,10 +9,13 @@ public class MenuButtons : MonoBehaviour
     [Header("Properties")]
     public bool hasRisen = false;
     public float tweenTime = 0.2f;
+    public string editorSceneName = "Editor", levelSceneName = "Game";
 
     [Header("Scene References")]
     public TMP_InputField levelToLoadInput;
-    public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound;
+    public TMP_InputField customLevelName;
+    public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound,
+        customLevelNotFound;
 
     void Start()
     {
@@ -73,7 +76,7 @@ public class MenuButtons : MonoBehaviour
     public void OpenEditor()
     {
         Fadeout();
-        StartCoroutine(LoadSceneAfterDelay(0.45f, "Editor"));
+        StartCoroutine(LoadSceneAfterDelay(0.45f, editorSceneName));
     }
 
     public void LoadLevelInEditor()
@@ -87,13 +90,26 @@ public class MenuButtons : MonoBehaviour
         EditorManager.loadLevelOnStart = true;
         EditorManager.levelToLoadOnStart = levelToLoadInput.text;
         Fadeout();
-        StartCoroutine(LoadSceneAfterDelay(0.45f, "Editor"));
+        StartCoroutine(LoadSceneAfterDelay(0.45f, editorSceneName));
+    }
+
+    public void LoadCustomLevel()
+    {
+        if (!EditorManager.LevelExists(customLevelName.text))
+        {
+            customLevelNotFound.SetActive(true);
+            return;
+        }
+
+        LevelLoader.levelToLoad = customLevelName.text;
+        Fadeout();
+        StartCoroutine(LoadSceneAfterDelay(0.45f, levelSceneName));
     }
 
     public void TestLevel()
     {
         Fadeout();
-        StartCoroutine(LoadSceneAfterDelay(0.45f, "Game"));
+        StartCoroutine(LoadSceneAfterDelay(0.45f, "TestLevel"));
     }
 
     public void Fadeout()

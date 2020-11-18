@@ -6,7 +6,7 @@ public class LevelData
 {
     public string name = "Untitled Level";
     public TileInfo[][] tiles;
-    public Vector3 playerPosition = new Vector3(-1, -1, -1);
+    public Vector3 playerPosition;
     public Vector2 levelSize;
 
     public LevelData()
@@ -20,6 +20,7 @@ public class LevelData
             tiles[i] = new TileInfo[ySize];
         }
         levelSize = new Vector2(xSize, ySize);
+        playerPosition = new Vector3(-1, -1, -1);
     }
 
     public TileInfo GetTileAt(int x, int y)

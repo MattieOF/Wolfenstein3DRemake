@@ -15,11 +15,19 @@ public class MapInfoPanel : MonoBehaviour
     public bool visible = false;
 
     private readonly Stopwatch timer = new Stopwatch();
+    private int killCount;
     
     void Start()
     {
         SetVisible(visible);
         StartTimer();
+    }
+
+    public void SetValues(string mapName, int tileCount, int enemyCount)
+    {
+        mapNameText.text = mapName;
+        tileCountText.text = "Tiles: " + tileCount;
+        killCountText.text = "Kills: 0/" + enemyCount;
     }
 
     public void StartTimer()
