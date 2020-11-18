@@ -61,6 +61,12 @@ public class MenuButtons : MonoBehaviour
         StartCoroutine(LoadSceneAfterDelay(0.45f, "Editor"));
     }
 
+    public void TestLevel()
+    {
+        Fadeout();
+        StartCoroutine(LoadSceneAfterDelay(0.45f, "Game"));
+    }
+
     public void Fadeout()
     {
         fadeOut.SetActive(true);

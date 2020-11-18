@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Diagnostics;
 using System;
@@ -36,6 +37,11 @@ public class MapInfoPanel : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             SetVisible(!visible);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SceneManager.LoadScene("Menu");
         }
 
         if (visible)
