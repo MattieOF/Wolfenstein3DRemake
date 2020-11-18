@@ -969,7 +969,7 @@ MonoBehaviour:
   levelLoadInputObject: {fileID: 1356544027}
   cameraControl: {fileID: 751851097}
   tilePrefab: {fileID: 64307637970032421, guid: d05dc1ebfb625f144addf43e51052553, type: 3}
-  menuSceneName: Game
+  menuSceneName: Menu
 --- !u!1 &323966056
 GameObject:
   m_ObjectHideFlags: 0
