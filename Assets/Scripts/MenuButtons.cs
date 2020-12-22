@@ -77,6 +77,8 @@ public class MenuButtons : MonoBehaviour
     public void OpenEditor()
     {
         Fadeout();
+        EditorManager.loadLevelOnStart = false;
+        EditorManager.levelToLoadOnStart = "";
         StartCoroutine(LoadSceneAfterDelay(0.45f, editorSceneName));
     }
 

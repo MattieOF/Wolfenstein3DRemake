@@ -32,6 +32,7 @@ public class LevelLoader : MonoBehaviour
         level = (LevelData)serializer.Deserialize(file.BaseStream);
         // mapInfoPanel.SetValues(level.name)
         file.Close();
+        // Debug.Log("Setting player pos to middle");
         playerObject.transform.position = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
         LoadTiles();
         LoadEntities();
@@ -69,7 +70,7 @@ public class LevelLoader : MonoBehaviour
     public void LoadEntities()
     {
         bool loadedPlayer = false;
-
+        
         entityCount = 0;
         enemyCount = 0;
         for (int x = 0; x < level.levelSize.x; x++)
@@ -80,8 +81,11 @@ public class LevelLoader : MonoBehaviour
                 {
                     if (level.entities[x][y].name == "PlayerStart")
                     {
+                        // Debug.Log("Positioning player");
                         if (loadedPlayer) Debug.LogWarning("Multiple player starts in the level.");
+                        // Debug.Log(playerObject.transform.position);
                         playerObject.transform.position = new Vector3(x, 1, y);
+                        // Debug.Log(playerObject.transform.position);
                         loadedPlayer = true;
                         continue;
                     }
