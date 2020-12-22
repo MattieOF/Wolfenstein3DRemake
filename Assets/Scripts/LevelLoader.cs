@@ -68,6 +68,8 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadEntities()
     {
+        bool loadedPlayer = false;
+
         entityCount = 0;
         enemyCount = 0;
         for (int x = 0; x < level.levelSize.x; x++)
@@ -78,7 +80,9 @@ public class LevelLoader : MonoBehaviour
                 {
                     if (level.entities[x][y].name == "PlayerStart")
                     {
+                        if (loadedPlayer) Debug.LogWarning("Multiple player starts in the level.");
                         playerObject.transform.position = new Vector3(x, 1, y);
+                        loadedPlayer = true;
                         continue;
                     }
 
