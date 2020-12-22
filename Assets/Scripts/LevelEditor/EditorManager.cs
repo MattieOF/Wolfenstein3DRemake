@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -18,7 +17,6 @@ public class EditorManager : MonoBehaviour
 
     [Header("Asset References")]
     public GameObject tilePrefab;
-    public GameObject playerTilePrefab;
 
     [HideInInspector]
     public static bool loadLevelOnStart = false;
@@ -103,7 +101,7 @@ public class EditorManager : MonoBehaviour
         levelNameControl.SetName(level.name);
         file.Close();
         LoadTiles();
-        // TODO Load player start object
+        LoadEntities();
     }
 
     public void LoadTiles()
@@ -123,11 +121,24 @@ public class EditorManager : MonoBehaviour
             }
         }
 
-        if (level.playerPosition != Vector3.one * -1)
+        // TODO Load Entities
+    }
+
+    public void LoadEntities()
+    {
+        for (int x = 0; x < level.levelSize.x; x++)
         {
-            GameObject go = Instantiate(playerTilePrefab);
-            go.transform.position = level.playerPosition;
-            objects.Add(go);
+            for (int y = 0; y < level.levelSize.y; y++)
+            {
+                if (level.entities[x][y] != null)
+                {
+                    GameObject go = Instantiate(tilePrefab);
+                    go.transform.position = new Vector3(x, 1, y);
+                    level.entities[x][y].texture = Resources.Load("Textures/" + level.entities[x][y].editorIconName, typeof(Texture)) as Texture;
+                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x][y].texture);
+                    objects.Add(go);
+                }
+            }
         }
     }
 
@@ -153,64 +164,68 @@ public class EditorManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
-    public void RemovePlayerTile()
+    public void Place(Vector3 location)
     {
-        GameObject go = GameObject.FindGameObjectWithTag("Player");
-        if (go)
+        if (tilePalette.selectedItemType == ItemType.None) return;
+        if (level.ItemExistsAt((int)location.x, (int)location.z)) return;
+        if (tilePalette.selectedItemType == ItemType.Tile)
         {
-            objects.Remove(go);
-            Destroy(go);
+            if (tilePalette.selectedTile == null) return;
+            else PlaceTile(location);
+        } else
+        {
+            if (tilePalette.selectedEntity == null) return;
+            else PlaceEntity(location);
         }
     }
 
     public void PlaceTile(Vector3 location)
     {
-        if (tilePalette.selectedTile == null && !tilePalette.selectedItem.specialTile) return;
-        if (level.TileExistsAt((int)location.x, (int)location.z)) return;
-        if (level.playerPosition == location) return;
+        //if (tilePalette.selectedItem.specialTile)
+        //{
+        //    switch (tilePalette.selectedItem.specialTileType)
+        //    {
+        //        case SpecialTiles.PlayerStart:
+        //            if (level.playerPosition == location) return;
+        //            RemovePlayerTile();
+        //            level.playerPosition = location;
+        //            GameObject go = Instantiate(playerTilePrefab);
+        //            go.transform.position = location;
+        //            objects.Add(go);
+        //            break;
+        //    }
+        //} else
 
-        if (tilePalette.selectedItem.specialTile)
-        {
-            switch (tilePalette.selectedItem.specialTileType)
-            {
-                case SpecialTiles.PlayerStart:
-                    if (level.playerPosition == location) return;
-                    RemovePlayerTile();
-                    level.playerPosition = location;
-                    GameObject go = Instantiate(playerTilePrefab);
-                    go.transform.position = location;
-                    objects.Add(go);
-                    break;
-            }
-        } else
-        {
-            level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
+        level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
 
-            GameObject go = Instantiate(tilePrefab);
-            go.transform.position = location;
-            go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedTile.texture);
-            objects.Add(go);
-        }
+        GameObject go = Instantiate(tilePrefab);
+        go.transform.position = location;
+        go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedTile.texture);
+        objects.Add(go);
     }
 
-    public void RemoveTile(Vector3 location)
+    public void PlaceEntity(Vector3 location)
     {
-        if (level.playerPosition == location)
-        {
-            level.playerPosition = Vector3.one * -1;
-        } else
-        {
-            if (!level.TileExistsAt((int)location.x, (int)location.z)) return;
-            level.RemoveTileAt((int)location.x, (int)location.z);
-        }
+        level.SetEntityAt((int)location.x, (int)location.z, tilePalette.selectedEntity);
+        GameObject go = Instantiate(tilePrefab);
+        go.transform.position = location;
+        go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedEntity.texture);
+        go.tag = "Entity";
+
+        objects.Add(go);
+    }
+
+    public void RemoveItem(Vector3 location)
+    {
+        if (!level.ItemExistsAt((int)location.x, (int)location.z)) return;
+        level.RemoveItemAt((int)location.x, (int)location.z);
 
         Collider[] colliders = Physics.OverlapSphere(location, 0.2f);
         if (colliders.Length != 0)
         {
             foreach (Collider collider in colliders)
             {
-                // TODO - MANAGE PLAYER START REMOVED
-                if (collider.tag == "Tile" || collider.tag == "Player")
+                if (collider.tag == "Tile" || collider.tag == "Entity")
                 {
                     objects.Remove(collider.gameObject);
                     Destroy(collider.gameObject);

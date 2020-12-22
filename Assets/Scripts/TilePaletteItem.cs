@@ -1,42 +1,13 @@
 ﻿using UnityEngine;
 
-public class TilePaletteItem : MonoBehaviour
+public class TilePaletteItem : PaletteItem
 {
-    [Header("Scene References")]
-    public GameObject highlight;
-    public GameObject selectHighlight;
-    public TilePalette tilePalette;
-
     [Header("Properties")]
     public TileInfo tileInfo;
-    public bool specialTile = false;
-    public SpecialTiles specialTileType;
 
-    void Start()
+    public override void Select()
     {
-        highlight.SetActive(false);
-        selectHighlight.SetActive(false);
-    }
-
-    public void PointerEnter()
-    {
-        highlight.SetActive(true);
-    }
-
-    public void PointerExit()
-    {
-        highlight.SetActive(false);
-    }
-
-    public void Select()
-    {
-        if (selectHighlight.activeSelf) return;
-        selectHighlight.SetActive(true);
+        base.Select();
         tilePalette.SelectTile(this);
-    }
-
-    public void Deselect()
-    {
-        selectHighlight.SetActive(false);
     }
 }

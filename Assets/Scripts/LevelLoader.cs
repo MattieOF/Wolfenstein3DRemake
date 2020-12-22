@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
-using TMPro;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -16,7 +13,7 @@ public class LevelLoader : MonoBehaviour
     public MapInfoPanel mapInfoPanel;
 
     private LevelData level;
-    private int tilesCount = 0, enemyCount = 0;
+    private int tilesCount = 0, enemyCount = 0, entityCount = 0;
 
     void Start()
     {
@@ -35,13 +32,15 @@ public class LevelLoader : MonoBehaviour
         level = (LevelData)serializer.Deserialize(file.BaseStream);
         // mapInfoPanel.SetValues(level.name)
         file.Close();
+        playerObject.transform.position = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
         LoadTiles();
+        LoadEntities();
+        mapInfoPanel.SetValues(level.name, tilesCount, enemyCount);
     }
 
     public void LoadTiles()
     {
         tilesCount = 0;
-        enemyCount = 0;
         for (int x = 0; x < level.levelSize.x; x++)
         {
             for (int y = 0; y < level.levelSize.y; y++)
@@ -65,16 +64,31 @@ public class LevelLoader : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (level.playerPosition == Vector3.one * -1)
+    public void LoadEntities()
+    {
+        entityCount = 0;
+        enemyCount = 0;
+        for (int x = 0; x < level.levelSize.x; x++)
         {
-            playerObject.transform.position = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
-        } else
-        {
-            playerObject.transform.position = level.playerPosition;
+            for (int y = 0; y < level.levelSize.y; y++)
+            {
+                if (level.entities[x][y] != null)
+                {
+                    if (level.entities[x][y].name == "PlayerStart")
+                    {
+                        playerObject.transform.position = new Vector3(x, 1, y);
+                        continue;
+                    }
+
+                    entityCount++;
+                    if (level.entities[x][y].isEnemy) enemyCount++;
+                    GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x][y].entityPrefabName), levelObjects.transform);
+                    go.transform.position = new Vector3(x, 1, y);
+                }
+            }
         }
-
-        mapInfoPanel.SetValues(level.name, tilesCount, enemyCount);
     }
 
     public void ClearLevel()

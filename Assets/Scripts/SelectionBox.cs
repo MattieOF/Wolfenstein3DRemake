@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SelectionBox : MonoBehaviour
 {
@@ -24,10 +22,10 @@ public class SelectionBox : MonoBehaviour
 
             if (Input.GetMouseButton(0) && allowPlace)
             {
-                editorManager.PlaceTile(roundedLoc);
+                editorManager.Place(roundedLoc);
             } else if (Input.GetMouseButton(1) && allowPlace)
             {
-                editorManager.RemoveTile(roundedLoc);
+                editorManager.RemoveItem(roundedLoc);
             }
         } else
         {
