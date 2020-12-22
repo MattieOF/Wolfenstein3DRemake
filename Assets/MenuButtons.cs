@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Uween;
 using TMPro;
@@ -16,6 +17,7 @@ public class MenuButtons : MonoBehaviour
     public TMP_InputField customLevelName;
     public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound,
         customLevelNotFound;
+    public Image titleLogo;
 
     void Start()
     {
