@@ -20,7 +20,7 @@ public class MenuButtons : MonoBehaviour
     void Start()
     {
         levelNotFound.SetActive(false);
-        TweenA.Add(titleLogo, 0.3f, 1);
+        TweenA.Add(titleLogo, 0.6f, 1);
     }
 
     void Update()
