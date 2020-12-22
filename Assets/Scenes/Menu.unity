@@ -1277,7 +1277,7 @@ MonoBehaviour:
   customLevelMenu: {fileID: 60245625}
   levelNotFound: {fileID: 1851083187}
   customLevelNotFound: {fileID: 1211402185}
-  titleLogo: {fileID: 607951390}
+  titleLogo: {fileID: 607951388}
 --- !u!1 &637872704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,6 +2046,7 @@ GameObject:
   - component: {fileID: 991273229}
   - component: {fileID: 991273228}
   - component: {fileID: 991273227}
+  - component: {fileID: 991273230}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -2070,7 +2071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -25}
+  m_AnchoredPosition: {x: -25, y: -25}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991273227
@@ -2167,6 +2168,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991273225}
   m_CullTransparentMesh: 0
+--- !u!95 &991273230
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 991273225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28d02adfc2ab3974593fc03822002fde, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1090497392
 GameObject:
   m_ObjectHideFlags: 0

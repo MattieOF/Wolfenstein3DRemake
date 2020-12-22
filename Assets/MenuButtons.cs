@@ -16,12 +16,12 @@ public class MenuButtons : MonoBehaviour
     public TMP_InputField levelToLoadInput;
     public TMP_InputField customLevelName;
     public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound,
-        customLevelNotFound;
-    public Image titleLogo;
+        customLevelNotFound, titleLogo;
 
     void Start()
     {
         levelNotFound.SetActive(false);
+        TweenA.Add(titleLogo, 0.3f, 1);
     }
 
     void Update()
