@@ -13,13 +13,14 @@ public class PaletteItem : MonoBehaviour
         selectHighlight.SetActive(false);
     }
 
-    public void PointerEnter()
+    public virtual void PointerEnter()
     {
         highlight.SetActive(true);
     }
 
-    public void PointerExit()
+    public virtual void PointerExit()
     {
+        tilePalette.SetTileInfoToCurrent();
         highlight.SetActive(false);
     }
 

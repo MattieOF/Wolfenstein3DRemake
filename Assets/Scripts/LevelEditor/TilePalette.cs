@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public enum PaletteTab
 {
@@ -21,6 +22,9 @@ public class TilePalette : MonoBehaviour
     public RectTransform tilesContent, entitiesContent;
     public Button tilesTabButton, entitiesTabButton;
     public ScrollRect paletteRect;
+    public GameObject tileInfoBox;
+    public TextMeshProUGUI tileNameText;
+    public RawImage tileIcon;
 
     [Header("Asset References")]
     public GameObject itemPrefab;
@@ -36,13 +40,48 @@ public class TilePalette : MonoBehaviour
     public PaletteTab currentTab = PaletteTab.Tiles;
     public ItemType selectedItemType = ItemType.None;
 
-    // public ColorBlock tabSelectedColours, tabUnselectedColours;
-
     void Start()
     {
         LoadTiles();
         LoadEntities();
         SwitchTab(currentTab);
+        SetTileInfoBoxActive(false);
+    }
+
+    public void SetTileInfoBoxActive(bool active)
+    {
+        tileInfoBox.SetActive(active);
+    }
+
+    public void SetTileInfoToCurrent()
+    {
+        SetTileInfoBoxActive(true);
+        switch (selectedItemType)
+        {
+            case ItemType.Entity:
+                SetTileInfoBox(selectedEntity);
+                break;
+            case ItemType.Tile:
+                SetTileInfoBox(selectedTile);
+                break;
+            default:
+                SetTileInfoBoxActive(false);
+                break;
+        }
+    }
+
+    public void SetTileInfoBox(EntityInfo info)
+    {
+        SetTileInfoBoxActive(true);
+        tileIcon.texture = info.texture;
+        tileNameText.text = info.entityName;
+    }
+
+    public void SetTileInfoBox(TileInfo info)
+    {
+        SetTileInfoBoxActive(true);
+        tileIcon.texture = info.texture;
+        tileNameText.text = info.tileName;
     }
 
     public void SwitchToEntityTab()

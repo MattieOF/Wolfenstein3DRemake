@@ -10,4 +10,10 @@ public class TilePaletteItem : PaletteItem
         base.Select();
         tilePalette.SelectTile(this);
     }
+
+    public override void PointerEnter()
+    {
+        base.PointerEnter();
+        tilePalette.SetTileInfoBox(tileInfo);
+    }
 }
