@@ -104,6 +104,7 @@ public class MenuButtons : MonoBehaviour
             return;
         }
 
+        LevelLoader.loadedFromEditor = false;
         LevelLoader.levelToLoad = customLevelName.text;
         Fadeout();
         StartCoroutine(LoadSceneAfterDelay(0.45f, levelSceneName));

@@ -2,8 +2,10 @@
 using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Uween;
 
 public class EditorManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class EditorManager : MonoBehaviour
     public TMP_InputField levelLoadInput;
     public GameObject levelLoadInputObject;
     public EditorCameraControl cameraControl;
+    public Image levelNameBG;
+    public Color levelNameBGDefault;
 
     [Header("Asset References")]
     public GameObject tilePrefab;
@@ -33,7 +37,8 @@ public class EditorManager : MonoBehaviour
     }
 
     [Header("Properties")]
-    public string menuSceneName = "Game";
+    public string menuSceneName = "Menu";
+    public string gameSceneName = "Game";
 
     private LevelData level = new LevelData(100, 100);
 
@@ -120,8 +125,6 @@ public class EditorManager : MonoBehaviour
                 }
             }
         }
-
-        // TODO Load Entities
     }
 
     public void LoadEntities()
@@ -218,5 +221,21 @@ public class EditorManager : MonoBehaviour
             }
         }
         else return;
+    }
+
+    public void PlayLevel()
+    {
+        if (LevelName == "Untitled Level")
+        {
+            levelNameBG.color = Color.red;
+            TweenC.Add(levelNameBG.gameObject, 1.5f, levelNameBGDefault);
+            TweenA.Add(levelNameBG.gameObject, 1f, levelNameBGDefault.a);
+            return;
+        }
+
+        Save();
+        LevelLoader.loadedFromEditor = true;
+        LevelLoader.levelToLoad = LevelName;
+        SceneManager.LoadScene(gameSceneName);
     }
 }

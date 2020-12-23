@@ -340,7 +340,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 82309000}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 279552242}
+        m_TargetAssemblyTypeName: EditorManager, Assembly-CSharp
+        m_MethodName: PlayLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &82309000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,8 +1118,11 @@ MonoBehaviour:
   levelLoadInput: {fileID: 155113508}
   levelLoadInputObject: {fileID: 1356544027}
   cameraControl: {fileID: 751851097}
+  levelNameBG: {fileID: 1783127366}
+  levelNameBGDefault: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 0.74509805}
   tilePrefab: {fileID: 64307637970032421, guid: d05dc1ebfb625f144addf43e51052553, type: 3}
   menuSceneName: Menu
+  gameSceneName: Game
 --- !u!1 &323966056
 GameObject:
   m_ObjectHideFlags: 0

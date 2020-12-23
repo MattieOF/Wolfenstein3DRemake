@@ -6,6 +6,8 @@ public class LevelLoader : MonoBehaviour
 {
     [HideInInspector]
     public static string levelToLoad = "";
+    [HideInInspector]
+    public static bool loadedFromEditor = false;
 
     [Header("Scene References")]
     public GameObject levelObjects;
