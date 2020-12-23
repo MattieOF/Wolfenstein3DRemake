@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 005_BlueWall2
   m_EditorClassIdentifier: 
   textureName: tile016
+  tileName: Blue Wall 2
   texture: {fileID: 0}
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}

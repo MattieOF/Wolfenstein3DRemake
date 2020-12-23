@@ -7,6 +7,7 @@ using UnityEngine;
 public class TileInfo : ScriptableObject
 {
     public string textureName;
+    public string tileName;
 
     [XmlIgnore]
     [HideInInspector]

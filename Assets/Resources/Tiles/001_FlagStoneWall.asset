@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 001_FlagStoneWall
   m_EditorClassIdentifier: 
   textureName: tile004
+  tileName: Stone Wall with Flag
   texture: {fileID: 2800000, guid: 592721d95173b74488f6a654a66da862, type: 3}
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}

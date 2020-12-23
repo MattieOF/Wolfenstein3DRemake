@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 007_BlueWallCageDead
   m_EditorClassIdentifier: 
   textureName: tile012
+  tileName: Blue Wall with Cage (dead)
   texture: {fileID: 0}
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}

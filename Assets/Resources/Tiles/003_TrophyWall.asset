@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 003_TrophyWall
   m_EditorClassIdentifier: 
   textureName: tile010
+  tileName: Trophy Wall
   texture: {fileID: 0}
   moveableTile: 0
   tileMoveOffset: {x: 0, y: 0}
