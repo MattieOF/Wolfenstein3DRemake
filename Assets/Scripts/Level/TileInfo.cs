@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tile", menuName = "Game/Tile")]
 public class TileInfo : ScriptableObject
 {
+    [Header("Tile Properties")]
     public string textureName;
     public string tileName;
 
