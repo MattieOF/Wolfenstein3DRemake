@@ -51,6 +51,12 @@ public class EditorCameraControl : MonoBehaviour
                 GetComponent<Camera>().orthographic = true;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            gameObject.transform.position = new Vector3(50, 100, 50);
+            GetComponent<Camera>().orthographicSize = 55;
+        }
     }
 
     // Perform camera movement here
