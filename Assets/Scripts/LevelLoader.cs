@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -13,13 +15,44 @@ public class LevelLoader : MonoBehaviour
     public GameObject levelObjects;
     public GameObject playerObject, tilePrefab;
     public MapInfoPanel mapInfoPanel;
+    public GameObject pauseMenu;
+    public TextMeshProUGUI mapNameText, quitButtonText;
+    public PlayerMouseLook mouseLook;
+
+    [Header("Asset References")]
+    public string menuSceneName = "Menu";
+    public string editorSceneName = "Editor";
+    public GameObject playerPrefab;
 
     private LevelData level;
     private int tilesCount = 0, enemyCount = 0, entityCount = 0;
+    private bool pauseMenuActive = false;
 
     void Start()
     {
         LoadLevel(levelToLoad);
+        if (loadedFromEditor) quitButtonText.text = "Return to Editor";
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            if (pauseMenuActive) ClosePauseMenu(); else OpenPauseMenu();
+    }
+
+    public void OpenPauseMenu()
+    {
+        pauseMenuActive = true;
+        pauseMenu.SetActive(true);
+        pauseMenu.GetComponent<Animator>().Play("OpenPauseMenu");
+        mouseLook.UnlockCursor();
+    }
+
+    public void ClosePauseMenu()
+    {
+        pauseMenuActive = false;
+        pauseMenu.GetComponent<Animator>().Play("ClosePauseMenu");
+        mouseLook.LockCursor();
     }
 
     public void LoadLevel(string levelName)
@@ -32,13 +65,12 @@ public class LevelLoader : MonoBehaviour
         ClearLevel();
         XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
         level = (LevelData)serializer.Deserialize(file.BaseStream);
-        // mapInfoPanel.SetValues(level.name)
         file.Close();
-        // Debug.Log("Setting player pos to middle");
-        playerObject.transform.position = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
         LoadTiles();
         LoadEntities();
+        mouseLook = playerObject.GetComponentInChildren<PlayerMouseLook>();
         mapInfoPanel.SetValues(level.name, tilesCount, enemyCount);
+        mapNameText.text = level.name;
     }
 
     public void LoadTiles()
@@ -83,11 +115,14 @@ public class LevelLoader : MonoBehaviour
                 {
                     if (level.entities[x][y].name == "PlayerStart")
                     {
-                        // Debug.Log("Positioning player");
-                        if (loadedPlayer) Debug.LogWarning("Multiple player starts in the level.");
-                        // Debug.Log(playerObject.transform.position);
-                        playerObject.transform.position = new Vector3(x, 1, y);
-                        // Debug.Log(playerObject.transform.position);
+                        if (loadedPlayer)
+                        {
+                            Debug.LogWarning("Multiple player starts in the level.");
+                            Destroy(playerObject);
+                        }
+
+                        Vector3 pos = new Vector3(x, 1, y);
+                        playerObject = Instantiate(playerPrefab, pos, Quaternion.identity);
                         loadedPlayer = true;
                         continue;
                     }
@@ -99,11 +134,37 @@ public class LevelLoader : MonoBehaviour
                 }
             }
         }
+
+        if (!loadedPlayer)
+        {
+            playerObject = Instantiate(playerPrefab);
+            playerPrefab.transform.localPosition = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
+            Debug.LogWarning("No player starts in the level.");
+        }
     }
 
     public void ClearLevel()
     {
         foreach (Transform t in levelObjects.transform)
             Destroy(t.gameObject);
+    }
+
+    public void Quit()
+    {
+        if (loadedFromEditor)
+        {
+            EditorManager.levelToLoadOnStart = level.name;
+            EditorManager.loadLevelOnStart = true;
+            SceneManager.LoadScene(editorSceneName);
+        } else
+        {
+            // TOOD Ask about saving
+            SceneManager.LoadScene(menuSceneName);
+        }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
