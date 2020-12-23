@@ -181,21 +181,6 @@ public class EditorManager : MonoBehaviour
 
     public void PlaceTile(Vector3 location)
     {
-        //if (tilePalette.selectedItem.specialTile)
-        //{
-        //    switch (tilePalette.selectedItem.specialTileType)
-        //    {
-        //        case SpecialTiles.PlayerStart:
-        //            if (level.playerPosition == location) return;
-        //            RemovePlayerTile();
-        //            level.playerPosition = location;
-        //            GameObject go = Instantiate(playerTilePrefab);
-        //            go.transform.position = location;
-        //            objects.Add(go);
-        //            break;
-        //    }
-        //} else
-
         level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
 
         GameObject go = Instantiate(tilePrefab);
