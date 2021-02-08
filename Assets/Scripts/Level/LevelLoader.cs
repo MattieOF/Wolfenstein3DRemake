@@ -46,6 +46,7 @@ public class LevelLoader : MonoBehaviour
         pauseMenu.SetActive(true);
         pauseMenu.GetComponent<Animator>().Play("OpenPauseMenu");
         mouseLook.UnlockCursor();
+        mapInfoPanel.StopTimer();
     }
 
     public void ClosePauseMenu()
@@ -53,6 +54,7 @@ public class LevelLoader : MonoBehaviour
         pauseMenuActive = false;
         pauseMenu.GetComponent<Animator>().Play("ClosePauseMenu");
         mouseLook.LockCursor();
+        mapInfoPanel.StartTimer();
     }
 
     public void LoadLevel(string levelName)
