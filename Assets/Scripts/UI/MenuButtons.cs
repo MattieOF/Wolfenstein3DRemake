@@ -21,6 +21,9 @@ public class MenuButtons : MonoBehaviour
     {
         levelNotFound.SetActive(false);
         TweenA.Add(titleLogo, 0.6f, 1);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void Update()
