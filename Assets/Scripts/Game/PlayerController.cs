@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour
     public float gravity = 20.0f;
     public bool acceptInput = true;
 
-    private Vector3 moveDirection = Vector3.zero;
-
     void Start()
     {
         characterController = GetComponent<CharacterController>();
