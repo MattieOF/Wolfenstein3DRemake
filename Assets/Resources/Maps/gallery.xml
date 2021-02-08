@@ -12895,7 +12895,7 @@
         <entityName>Pile of Bones</entityName>
         <isEnemy>false</isEnemy>
         <useEditorIcon>true</useEditorIcon>
-        <collidable>true</collidable>
+        <collidable>false</collidable>
       </EntityInfo>
       <EntityInfo xsi:nil="true" />
       <EntityInfo xsi:nil="true" />
