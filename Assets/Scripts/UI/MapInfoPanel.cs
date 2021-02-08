@@ -47,13 +47,6 @@ public class MapInfoPanel : MonoBehaviour
             SetVisible(!visible);
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            SceneManager.LoadScene("Menu");
-        }
-
         if (visible)
         {
             TimeSpan ts = timer.Elapsed;
