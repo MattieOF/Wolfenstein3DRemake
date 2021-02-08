@@ -128,7 +128,6 @@ public class LevelLoader : MonoBehaviour
                     {
                         entityCount++;
                         if (level.entities[x][y].isEnemy) enemyCount++;
-                        Debug.Log("Entities/" + level.entities[x][y].entityPrefabName);
                         GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x][y].entityPrefabName), levelObjects.transform);
                         go.transform.position = new Vector3(x, 1, y);
                         if (level.entities[x][y].useEditorIcon)
