@@ -113,7 +113,7 @@ public class LevelLoader : MonoBehaviour
             {
                 if (level.entities[x][y] != null)
                 {
-                    if (level.entities[x][y].name == "PlayerStart")
+                    if (level.entities[x][y].entityName == "PlayerStart")
                     {
                         if (loadedPlayer)
                         {
@@ -124,13 +124,21 @@ public class LevelLoader : MonoBehaviour
                         Vector3 pos = new Vector3(x, 1, y);
                         playerObject = Instantiate(playerPrefab, pos, Quaternion.identity);
                         loadedPlayer = true;
-                        continue;
+                    } else
+                    {
+                        entityCount++;
+                        if (level.entities[x][y].isEnemy) enemyCount++;
+                        Debug.Log("Entities/" + level.entities[x][y].entityPrefabName);
+                        GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x][y].entityPrefabName), levelObjects.transform);
+                        go.transform.position = new Vector3(x, 1, y);
+                        if (level.entities[x][y].useEditorIcon)
+                        {
+                            level.entities[x][y].texture = Resources.Load("Textures/" + level.entities[x][y].editorIconName, typeof(Texture)) as Texture;
+                            go.GetComponentInChildren<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x][y].texture);
+                        }
+                        if (!level.entities[x][y].collidable)
+                            Destroy(go.GetComponentInChildren<BoxCollider>());
                     }
-
-                    entityCount++;
-                    if (level.entities[x][y].isEnemy) enemyCount++;
-                    GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x][y].entityPrefabName), levelObjects.transform);
-                    go.transform.position = new Vector3(x, 1, y);
                 }
             }
         }

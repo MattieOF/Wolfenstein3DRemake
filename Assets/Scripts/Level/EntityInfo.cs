@@ -11,6 +11,8 @@ public class EntityInfo : ScriptableObject
     public string entityPrefabName;
     public string entityName;
     public bool isEnemy = false;
+    public bool useEditorIcon = false;
+    public bool collidable = true;
 
     [XmlIgnore]
     [HideInInspector]
