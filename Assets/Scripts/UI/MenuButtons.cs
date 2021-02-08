@@ -110,6 +110,14 @@ public class MenuButtons : MonoBehaviour
         StartCoroutine(LoadSceneAfterDelay(0.45f, levelSceneName));
     }
 
+    public void LoadLevelDirect(string level)
+    {
+        LevelLoader.loadedFromEditor = false;
+        LevelLoader.levelToLoad = level;
+        Fadeout();
+        StartCoroutine(LoadSceneAfterDelay(0.45f, levelSceneName));
+    }
+
     public void TestLevel()
     {
         Fadeout();

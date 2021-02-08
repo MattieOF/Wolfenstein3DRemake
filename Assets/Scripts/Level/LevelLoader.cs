@@ -59,8 +59,26 @@ public class LevelLoader : MonoBehaviour
     {
         if (!EditorManager.LevelExists(levelName)) return;
 
-        Debug.Log("Opening level " + Application.persistentDataPath + "/Wolf3DLevels/" + levelName + ".xml");
-        StreamReader file = new StreamReader(Application.persistentDataPath + "/Wolf3DLevels/" + levelName + ".xml");
+        string path = Application.persistentDataPath + "/Wolf3DLevels/" + levelName + ".xml";
+        StreamReader file;
+        if (File.Exists(path))
+            file = new StreamReader(path);
+        else
+        {
+            TextAsset level = Resources.Load<TextAsset>($"Maps/{levelName}");
+            if (level)
+            {
+                file = new StreamReader(new MemoryStream(level.bytes));
+                path = levelName;
+            }
+            else
+            {
+                Debug.LogError($"Couldn't find map with name {levelName}");
+                return;
+            }
+        }
+
+        Debug.Log("Opening level " + path);
 
         ClearLevel();
         XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
