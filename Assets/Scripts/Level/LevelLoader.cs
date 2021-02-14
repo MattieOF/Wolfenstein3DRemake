@@ -164,9 +164,9 @@ public class LevelLoader : MonoBehaviour
 
         if (!loadedPlayer)
         {
+            Debug.LogWarning("No player starts in the level, so the player is spawned at the center of the level");
             playerObject = Instantiate(playerPrefab);
-            playerPrefab.transform.localPosition = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2);
-            Debug.LogWarning("No player starts in the level.");
+            playerPrefab.transform.localPosition = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2); // Spawn in middle of the level
         }
     }
 

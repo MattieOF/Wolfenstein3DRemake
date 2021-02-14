@@ -18,6 +18,7 @@ public class EditorManager : MonoBehaviour
     public EditorCameraControl cameraControl;
     public Image levelNameBG;
     public Color levelNameBGDefault;
+    public GameObject moveableTileUI;
 
     [Header("Asset References")]
     public GameObject tilePrefab;
@@ -28,6 +29,8 @@ public class EditorManager : MonoBehaviour
     public static string levelToLoadOnStart = "";
 
     private List<GameObject> objects = new List<GameObject>();
+
+    private bool editingMoveTileStart = false, editingMoveTileEnd = false;
 
     // [Header("Level Properties")]
     public string LevelName
@@ -237,5 +240,25 @@ public class EditorManager : MonoBehaviour
         LevelLoader.loadedFromEditor = true;
         LevelLoader.levelToLoad = LevelName;
         SceneManager.LoadScene(gameSceneName);
+    }
+
+    public void ToggleMoveableTileUI()
+    {
+        if (editingMoveTileEnd || editingMoveTileStart) return;
+        moveableTileUI.SetActive(!moveableTileUI.activeSelf);
+    }
+
+    public void EditMoveableTileStart()
+    {
+        if (editingMoveTileEnd) return;
+        editingMoveTileStart = true;
+        // Show UI
+    }
+
+    public void EditMoveableTileEnd()
+    {
+        if (editingMoveTileStart) return;
+        editingMoveTileEnd = true;
+        // Show UI
     }
 }
