@@ -13,7 +13,7 @@ public class LevelLoader : MonoBehaviour
 
     [Header("Scene References")]
     public GameObject levelObjects;
-    public GameObject playerObject, tilePrefab;
+    public GameObject playerObject, tilePrefab, multiplePlayerStartsWarning;
     public MapInfoPanel mapInfoPanel;
     public GameObject pauseMenu;
     public TextMeshProUGUI mapNameText, quitButtonText;
@@ -138,6 +138,7 @@ public class LevelLoader : MonoBehaviour
                         if (loadedPlayer)
                         {
                             Debug.LogWarning("Multiple player starts in the level.");
+                            multiplePlayerStartsWarning.SetActive(true);
                             Destroy(playerObject);
                         }
 
