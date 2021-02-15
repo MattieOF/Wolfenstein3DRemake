@@ -7,6 +7,13 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Uween;
 
+public enum MoveableTileEditStage
+{
+    None,
+    PlaceStart,
+    PlaceEnd
+}
+
 public class EditorManager : MonoBehaviour
 {
     [Header("Scene References")]
@@ -18,7 +25,8 @@ public class EditorManager : MonoBehaviour
     public EditorCameraControl cameraControl;
     public Image levelNameBG;
     public Color levelNameBGDefault;
-    public GameObject moveableTileUI;
+    public GameObject moveableTileUI, moveableTileError;
+    public TextMeshProUGUI moveableTileErrorText;
 
     [Header("Asset References")]
     public GameObject tilePrefab;
@@ -30,7 +38,8 @@ public class EditorManager : MonoBehaviour
 
     private List<GameObject> objects = new List<GameObject>();
 
-    private bool editingMoveTileStart = false, editingMoveTileEnd = false;
+    private MoveableTileEditStage moveableTileEditStage = MoveableTileEditStage.None;
+    private Vector2 moveableTileStart, moveableTileEnd;
 
     // [Header("Level Properties")]
     public string LevelName
@@ -70,7 +79,6 @@ public class EditorManager : MonoBehaviour
     {
         Debug.Log("Saving level.");
         LevelSerialiser.Save(level);
-        // SAVE LEVEL HERE
     }
 
     public void ShowLoadLevelInput()
@@ -172,8 +180,24 @@ public class EditorManager : MonoBehaviour
 
     public void Place(Vector3 location)
     {
+        int x = (int)location.x;
+        int y = (int)location.y;
+
+        if (moveableTileEditStage == MoveableTileEditStage.PlaceStart)
+        {
+            if (!level.TileExistsAt(x, y))
+            {
+                SetMoveableTileError("A tile must exist at a moveable tile start position");
+                return;
+            }
+
+            moveableTileStart = new Vector2(x, y);
+            moveableTileEditStage = MoveableTileEditStage.PlaceEnd;
+            return;
+        }
+
         if (tilePalette.selectedItemType == ItemType.None) return;
-        if (level.ItemExistsAt((int)location.x, (int)location.z)) return;
+        if (level.ItemExistsAt(x, y)) return;
         if (tilePalette.selectedItemType == ItemType.Tile)
         {
             if (tilePalette.selectedTile == null) return;
@@ -244,21 +268,15 @@ public class EditorManager : MonoBehaviour
 
     public void ToggleMoveableTileUI()
     {
-        if (editingMoveTileEnd || editingMoveTileStart) return;
         moveableTileUI.SetActive(!moveableTileUI.activeSelf);
+        moveableTileEditStage = moveableTileUI.activeSelf ? MoveableTileEditStage.PlaceStart : MoveableTileEditStage.None;
+        moveableTileError.SetActive(false);
     }
 
-    public void EditMoveableTileStart()
+    public void SetMoveableTileError(string error)
     {
-        if (editingMoveTileEnd) return;
-        editingMoveTileStart = true;
-        // Show UI
+        moveableTileError.SetActive(true);
+        moveableTileErrorText.text = error;
     }
 
-    public void EditMoveableTileEnd()
-    {
-        if (editingMoveTileStart) return;
-        editingMoveTileEnd = true;
-        // Show UI
-    }
 }
