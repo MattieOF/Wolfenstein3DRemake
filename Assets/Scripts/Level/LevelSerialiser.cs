@@ -6,7 +6,7 @@ public class LevelSerialiser
 {
     public static void Save(LevelData level)
     {
-        string data = JsonConvert.SerializeObject(level);
+        string data = JsonConvert.SerializeObject(level, Formatting.Indented);
         if (!Directory.Exists(Application.persistentDataPath + "/Wolf3DLevels/"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Wolf3DLevels/");
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/Wolf3DLevels/" + level.name + ".json");
