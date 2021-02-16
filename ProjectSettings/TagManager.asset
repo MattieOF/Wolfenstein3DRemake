@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - Entity
+  - TileMoveable
   layers:
   - Default
   - TransparentFX

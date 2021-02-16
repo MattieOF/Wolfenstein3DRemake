@@ -112,6 +112,7 @@ public class LevelLoader : MonoBehaviour
                     {
                         MoveableTile mt = go.AddComponent<MoveableTile>();
                         mt.endPosition = level.tiles[x][y].tileMoveTo;
+                        go.tag = "TileMoveable";
                     }
 
                     Vector2[] uvs = go.GetComponent<MeshFilter>().sharedMesh.uv;
