@@ -12,7 +12,7 @@ public class MoveableTile : MonoBehaviour
     [Header("Properties")]
     public Vector2 endPosition;
     [Tooltip("Time in seconds for the tile to move one unit")]
-    public float speed = .75f;
+    public float speed = 1;
 
     private bool moved = false;
     private MoveAxis axis;
