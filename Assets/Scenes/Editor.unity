@@ -1323,6 +1323,8 @@ MonoBehaviour:
   moveableTileUI: {fileID: 1145298917}
   moveableTileError: {fileID: 651469254}
   moveableTileErrorText: {fileID: 1917045942}
+  moveableTileStartText: {fileID: 496251105}
+  moveableTileEndText: {fileID: 252767398}
   tilePrefab: {fileID: 64307637970032421, guid: d05dc1ebfb625f144addf43e51052553, type: 3}
   menuSceneName: Menu
   gameSceneName: Game
@@ -2202,7 +2204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 279552242}
         m_TargetAssemblyTypeName: EditorManager, Assembly-CSharp
-        m_MethodName: Save
+        m_MethodName: ToggleMoveableTileUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -7,6 +8,7 @@ public class LevelData
     public string name = "Untitled Level";
     public TileInfo[][] tiles;
     public EntityInfo[][] entities;
+    public List<Vector2> moveableTileEndPositions;
     public Vector2 levelSize;
 
     public LevelData()
@@ -24,6 +26,7 @@ public class LevelData
         {
             entities[i] = new EntityInfo[ySize];
         }
+        moveableTileEndPositions = new List<Vector2>();
         levelSize = new Vector2(xSize, ySize);
     }
 
@@ -71,12 +74,22 @@ public class LevelData
 
     public bool ItemExistsAt(int x, int y)
     {
-        return !(tiles[x][y] == null) | !(entities[x][y] == null);
+        return !(tiles[x][y] == null) | !(entities[x][y] == null) | MoveableTileEndPosAt(x, y);
     }
 
     public void RemoveItemAt(int x, int y)
     {
         if (EntityExistsAt(x, y)) RemoveEntityAt(x, y);
         else if (TileExistsAt(x, y)) RemoveTileAt(x, y);
+    }
+
+    public bool MoveableTileEndPosAt(int x, int y)
+    {
+        return moveableTileEndPositions.Contains(new Vector2(x, y));
+    }
+
+    public void AddMoveableTileEndPos(int x, int y)
+    {
+        moveableTileEndPositions.Add(new Vector2(x, y));
     }
 }

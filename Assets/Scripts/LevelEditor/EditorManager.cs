@@ -26,7 +26,7 @@ public class EditorManager : MonoBehaviour
     public Image levelNameBG;
     public Color levelNameBGDefault;
     public GameObject moveableTileUI, moveableTileError;
-    public TextMeshProUGUI moveableTileErrorText;
+    public TextMeshProUGUI moveableTileErrorText, moveableTileStartText, moveableTileEndText;
 
     [Header("Asset References")]
     public GameObject tilePrefab;
@@ -58,6 +58,7 @@ public class EditorManager : MonoBehaviour
     {
         saveFirstObject.SetActive(false);
         levelLoadInputObject.SetActive(false);
+        ToggleMoveableTileUI(); // Make sure it's off
         if (loadLevelOnStart)
         {
             LoadLevel(levelToLoadOnStart);
@@ -178,12 +179,12 @@ public class EditorManager : MonoBehaviour
         SceneManager.LoadScene(menuSceneName);
     }
 
-    public void Place(Vector3 location)
+    public void Place(Vector3 location, bool buttonDown)
     {
         int x = (int)location.x;
-        int y = (int)location.y;
+        int y = (int)location.z;
 
-        if (moveableTileEditStage == MoveableTileEditStage.PlaceStart)
+        if (moveableTileEditStage == MoveableTileEditStage.PlaceStart && buttonDown)
         {
             if (!level.TileExistsAt(x, y))
             {
@@ -192,7 +193,26 @@ public class EditorManager : MonoBehaviour
             }
 
             moveableTileStart = new Vector2(x, y);
+            moveableTileStartText.text = $"Start pos: {moveableTileStart}";
             moveableTileEditStage = MoveableTileEditStage.PlaceEnd;
+            return;
+        }
+        else if (moveableTileEditStage == MoveableTileEditStage.PlaceEnd && buttonDown)
+        {
+            if (level.TileExistsAt(x, y))
+            {
+                SetMoveableTileError("A tile must not exist at a moveable tile end positon");
+                return;
+            }
+
+            moveableTileEnd = new Vector2(x, y);
+            if (!MoveableTilePathValid()) return;
+
+            level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].moveableTile = true;
+            level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].tileMoveTo = new Vector2(x, y);
+            level.AddMoveableTileEndPos(x, y);
+            moveableTileEditStage = MoveableTileEditStage.None;
+            ToggleMoveableTileUI();
             return;
         }
 
@@ -270,6 +290,8 @@ public class EditorManager : MonoBehaviour
     {
         moveableTileUI.SetActive(!moveableTileUI.activeSelf);
         moveableTileEditStage = moveableTileUI.activeSelf ? MoveableTileEditStage.PlaceStart : MoveableTileEditStage.None;
+        moveableTileStartText.text = "Start pos: Selecting";
+        moveableTileEndText.text = "End pos: Selecting";
         moveableTileError.SetActive(false);
     }
 
@@ -279,4 +301,19 @@ public class EditorManager : MonoBehaviour
         moveableTileErrorText.text = error;
     }
 
+    public bool MoveableTilePathValid()
+    {
+        bool moveX = false, moveY = false;
+
+        if ((int)moveableTileStart.x != (int)moveableTileEnd.x) moveX = true;
+        if ((int)moveableTileStart.y != (int)moveableTileEnd.y) moveY = true;
+
+        if (moveX && moveY)
+        {
+            SetMoveableTileError("Moveable tiles must move in one axis only");
+            return false;
+        }
+
+        return true;
+    }
 }

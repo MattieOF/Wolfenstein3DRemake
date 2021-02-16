@@ -17,7 +17,7 @@ public class TileInfo : ScriptableObject
     [HideInInspector]
     public bool moveableTile = false;
     [HideInInspector]
-    public Vector2 tileMoveOffset = new Vector2();
+    public Vector2 tileMoveTo = new Vector2();
 
     public TileInfo()
     { }

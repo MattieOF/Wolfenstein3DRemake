@@ -24,7 +24,7 @@ public class SelectionBox : MonoBehaviour
 
             if (Input.GetMouseButton(0) && allowPlace)
             {
-                editorManager.Place(roundedLoc);
+                editorManager.Place(roundedLoc, Input.GetMouseButtonDown(0));
             } else if (Input.GetMouseButton(1) && allowPlace)
             {
                 editorManager.RemoveItem(roundedLoc);
