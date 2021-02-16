@@ -5,6 +5,7 @@ public class SelectionBox : MonoBehaviour
     [Header("Scene References")]
     public Camera editorCamera;
     public EditorManager editorManager;
+    public TilePosText tilePosText;
 
     [Header("Properties")]
     public bool allowPlace = true;
@@ -19,6 +20,7 @@ public class SelectionBox : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = true;
             roundedLoc = new Vector3(Mathf.FloorToInt(rayHit.point.x + 0.5f), 1, Mathf.FloorToInt(rayHit.point.z + 0.5f));
             transform.position = roundedLoc;
+            tilePosText.SetPos((int)roundedLoc.x, (int)roundedLoc.z);
 
             if (Input.GetMouseButton(0) && allowPlace)
             {
@@ -29,6 +31,7 @@ public class SelectionBox : MonoBehaviour
             }
         } else
         {
+            tilePosText.SetTilePosActive(false);
             GetComponent<MeshRenderer>().enabled = false;
         }
     }
