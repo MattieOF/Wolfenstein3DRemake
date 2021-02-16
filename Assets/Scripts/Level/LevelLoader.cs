@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -61,16 +60,14 @@ public class LevelLoader : MonoBehaviour
     {
         if (!EditorManager.LevelExists(levelName)) return;
 
-        string path = Application.persistentDataPath + "/Wolf3DLevels/" + levelName + ".xml";
-        StreamReader file;
-        if (File.Exists(path))
-            file = new StreamReader(path);
-        else
+        string path = Application.persistentDataPath + "/Wolf3DLevels/" + levelName + ".json";
+        bool fromRes = false;
+        if (!File.Exists(path))
         {
             TextAsset level = Resources.Load<TextAsset>($"Maps/{levelName}");
             if (level)
             {
-                file = new StreamReader(new MemoryStream(level.bytes));
+                fromRes = true;
                 path = levelName;
             }
             else
@@ -83,9 +80,7 @@ public class LevelLoader : MonoBehaviour
         Debug.Log("Opening level " + path);
 
         ClearLevel();
-        XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
-        level = (LevelData)serializer.Deserialize(file.BaseStream);
-        file.Close();
+        level = LevelSerialiser.LoadLevel(path, fromRes);
         LoadTiles();
         LoadEntities();
         mouseLook = playerObject.GetComponentInChildren<PlayerMouseLook>();

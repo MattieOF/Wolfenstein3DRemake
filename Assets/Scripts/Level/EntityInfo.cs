@@ -1,5 +1,5 @@
-using System.Xml.Serialization;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [CreateAssetMenu(fileName = "New Entity", menuName = "Game/Entity")]
 public class EntityInfo : ScriptableObject
@@ -14,7 +14,7 @@ public class EntityInfo : ScriptableObject
     public bool useEditorIcon = false;
     public bool collidable = true;
 
-    [XmlIgnore]
+    [JsonIgnore]
     [HideInInspector]
     public Texture texture;
 }

@@ -1,16 +1,34 @@
 ﻿using System.IO;
-using System.Xml.Serialization;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class LevelSerialiser
 {
     public static void Save(LevelData level)
     {
-        XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
+        string data = JsonConvert.SerializeObject(level);
         if (!Directory.Exists(Application.persistentDataPath + "/Wolf3DLevels/"))
             Directory.CreateDirectory(Application.persistentDataPath + "/Wolf3DLevels/");
-        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/Wolf3DLevels/" + level.name + ".xml");
-        serializer.Serialize(writer.BaseStream, level);
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/Wolf3DLevels/" + level.name + ".json");
+        writer.Write(data);
         writer.Close();
+    }
+
+    public static LevelData LoadLevel(string path, bool fromResources)
+    {
+        StreamReader reader;
+        if (fromResources)
+        {
+            TextAsset level = Resources.Load<TextAsset>($"Maps/{path}");
+            reader = new StreamReader(new MemoryStream(level.bytes));
+        } 
+        else
+        {
+            reader = new StreamReader(path);
+        }
+
+        LevelData data = JsonConvert.DeserializeObject<LevelData>(reader.ReadToEnd());
+        reader.Close();
+        return data;
     }
 }

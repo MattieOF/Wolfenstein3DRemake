@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Xml.Serialization;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable]
 [CreateAssetMenu(fileName = "New Tile", menuName = "Game/Tile")]
@@ -10,7 +10,7 @@ public class TileInfo : ScriptableObject
     public string textureName;
     public string tileName;
 
-    [XmlIgnore]
+    [JsonIgnore]
     [HideInInspector]
     public Texture texture;
 

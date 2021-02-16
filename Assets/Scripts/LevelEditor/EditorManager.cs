@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -68,7 +67,7 @@ public class EditorManager : MonoBehaviour
     public static bool LevelExists(string name)
     {
         if (string.IsNullOrWhiteSpace(name)) return false;
-        return File.Exists(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml");
+        return File.Exists(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".json");
     }
 
     public void SetName(string name)
@@ -103,20 +102,17 @@ public class EditorManager : MonoBehaviour
 
     public void LoadLevel(string name)
     {
-        if (!File.Exists(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml"))
+        if (!File.Exists(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".json"))
         {
-            Debug.Log("Level " + Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml not found.");
+            Debug.Log("Level " + Application.persistentDataPath + "/Wolf3DLevels/" + name + ".json not found.");
             return;
         }
 
-        Debug.Log("Opening level " + Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml");
-        StreamReader file = new StreamReader(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".xml");
+        Debug.Log("Opening level " + Application.persistentDataPath + "/Wolf3DLevels/" + name + ".json");
 
         ClearEditor();
-        XmlSerializer serializer = new XmlSerializer(typeof(LevelData));
-        level = (LevelData)serializer.Deserialize(file.BaseStream);
+        level = LevelSerialiser.LoadLevel(Application.persistentDataPath + "/Wolf3DLevels/" + name + ".json", false);
         levelNameControl.SetName(level.name);
-        file.Close();
         LoadTiles();
         LoadEntities();
     }
