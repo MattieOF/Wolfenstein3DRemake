@@ -108,6 +108,12 @@ public class LevelLoader : MonoBehaviour
                     level.tiles[x][y].texture = Resources.Load("Textures/" + level.tiles[x][y].textureName, typeof(Texture)) as Texture;
                     go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.tiles[x][y].texture);
 
+                    if (level.tiles[x][y].moveableTile)
+                    {
+                        MoveableTile mt = go.AddComponent<MoveableTile>();
+                        mt.endPosition = level.tiles[x][y].tileMoveTo;
+                    }
+
                     Vector2[] uvs = go.GetComponent<MeshFilter>().sharedMesh.uv;
 
                     uvs[6] = new Vector2(0, 0);
