@@ -28,7 +28,7 @@ public class MoveableTile : MonoBehaviour
                 TweenX.Add(gameObject, speed, endPosition.x);
                 break;
             case MoveAxis.Y:
-                TweenY.Add(gameObject, speed, endPosition.y);
+                TweenZ.Add(gameObject, speed, endPosition.y);
                 break;
         }
 
