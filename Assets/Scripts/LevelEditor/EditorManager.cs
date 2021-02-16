@@ -208,6 +208,7 @@ public class EditorManager : MonoBehaviour
             moveableTileEnd = new Vector2(x, y);
             if (!MoveableTilePathValid()) return;
 
+            Debug.Log($"Marked tile at {new Vector2((int)moveableTileStart.x, (int)moveableTileStart.y)} as moveable to location {new Vector2(x, y)}");
             level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].moveableTile = true;
             level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].tileMoveTo = new Vector2(x, y);
             level.AddMoveableTileEndPos(x, y);
