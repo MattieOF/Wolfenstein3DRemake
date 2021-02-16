@@ -216,6 +216,7 @@ public class EditorManager : MonoBehaviour
             return;
         }
 
+        if (moveableTileEditStage != MoveableTileEditStage.None) return;
         if (tilePalette.selectedItemType == ItemType.None) return;
         if (level.ItemExistsAt(x, y)) return;
         if (tilePalette.selectedItemType == ItemType.Tile)
