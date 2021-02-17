@@ -30,8 +30,6 @@ public class TilePalette : MonoBehaviour
     public GameObject itemPrefab;
     public GameObject entityPrefab;
     
-    private TileInfo[] tiles;
-    private EntityInfo[] entities;
     public TileInfo selectedTile;
     public EntityInfo selectedEntity;
     public PaletteItem selectedItem;
@@ -120,9 +118,7 @@ public class TilePalette : MonoBehaviour
 
     public void LoadTiles()
     {
-        tiles = Resources.LoadAll<TileInfo>("Tiles");
-
-        foreach (TileInfo tile in tiles)
+        foreach (TileInfo tile in Tile.tileTypes.Values)
         {
             GameObject go = Instantiate(itemPrefab, tilesContent);
             go.GetComponent<RawImage>().texture = tile.texture;
@@ -134,11 +130,8 @@ public class TilePalette : MonoBehaviour
 
     public void LoadEntities()
     {
-        entities = Resources.LoadAll<EntityInfo>("Entities");
-
-        foreach (EntityInfo entity in entities)
+        foreach (EntityInfo entity in Entity.entityTypes.Values)
         {
-            entity.texture = Resources.Load("Textures/" + entity.editorIconName, typeof(Texture)) as Texture;
             GameObject go = Instantiate(entityPrefab, entitiesContent);
             go.GetComponent<RawImage>().texture = entity.texture;
             EntityPaletteItem item = go.GetComponent<EntityPaletteItem>();

@@ -144,8 +144,7 @@ public class EditorManager : MonoBehaviour
                 {
                     GameObject go = Instantiate(tilePrefab);
                     go.transform.position = new Vector3(x, 1, y);
-                    level.entities[x, y].texture = Resources.Load("Textures/" + level.entities[x, y].editorIconName, typeof(Texture)) as Texture;
-                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x, y].texture);
+                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", Entity.entityTypes[level.entities[x, y].entityType].texture);
                     objects.Add(go);
                 }
             }
@@ -238,7 +237,12 @@ public class EditorManager : MonoBehaviour
 
     public void PlaceEntity(Vector3 location)
     {
-        level.SetEntityAt((int)location.x, (int)location.z, tilePalette.selectedEntity);
+        Entity e = new Entity
+        {
+            entityType = tilePalette.selectedEntity.name
+        };
+        level.SetEntityAt((int)location.x, (int)location.z, e);
+
         GameObject go = Instantiate(tilePrefab);
         go.transform.position = location;
         go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", tilePalette.selectedEntity.texture);

@@ -7,7 +7,7 @@ public class LevelData
 {
     public string name = "Untitled Level";
     public Tile[,] tiles;
-    public EntityInfo[,] entities;
+    public Entity[,] entities;
     public List<Vector2> moveableTileEndPositions;
     public Vector2 levelSize;
 
@@ -17,7 +17,7 @@ public class LevelData
     public LevelData(int xSize, int ySize)
     {
         tiles = new Tile[xSize, ySize];
-        entities = new EntityInfo[xSize, ySize];
+        entities = new Entity[xSize, ySize];
         moveableTileEndPositions = new List<Vector2>();
         levelSize = new Vector2(xSize, ySize);
     }
@@ -48,7 +48,7 @@ public class LevelData
         tiles[x, y] = null;
     }
 
-    public EntityInfo GetEntityAt(int x, int y)
+    public Entity GetEntityAt(int x, int y)
     {
         return entities[x, y];
     }
@@ -59,9 +59,14 @@ public class LevelData
         else return true;
     }
 
-    public void SetEntityAt(int x, int y, EntityInfo entity)
+    public void SetEntityAt(int x, int y, Entity entity)
     {
         entities[x, y] = entity;
+    }
+
+    public void SetEntityTypeAt(int x, int y, EntityInfo entity)
+    {
+        entities[x, y].entityType = entity.name;
     }
 
     public void RemoveEntityAt(int x, int y)

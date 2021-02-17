@@ -134,7 +134,7 @@ public class LevelLoader : MonoBehaviour
             {
                 if (level.entities[x, y] != null)
                 {
-                    if (level.entities[x, y].entityName == "PlayerStart")
+                    if (Entity.entityTypes[level.entities[x, y].entityType].entityName == "PlayerStart")
                     {
                         if (loadedPlayer)
                         {
@@ -149,15 +149,14 @@ public class LevelLoader : MonoBehaviour
                     } else
                     {
                         entityCount++;
-                        if (level.entities[x, y].isEnemy) enemyCount++;
-                        GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x, y].entityPrefabName), levelObjects.transform);
+                        if (Entity.entityTypes[level.entities[x, y].entityType].isEnemy) enemyCount++;
+                        GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + Entity.entityTypes[level.entities[x, y].entityType].entityPrefabName), levelObjects.transform);
                         go.transform.position = new Vector3(x, 1, y);
-                        if (level.entities[x, y].useEditorIcon)
+                        if (Entity.entityTypes[level.entities[x, y].entityType].useEditorIcon)
                         {
-                            level.entities[x, y].texture = Resources.Load("Textures/" + level.entities[x, y].editorIconName, typeof(Texture)) as Texture;
-                            go.GetComponentInChildren<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x, y].texture);
+                            go.GetComponentInChildren<MeshRenderer>().materials[0].SetTexture("_MainTex", Entity.entityTypes[level.entities[x, y].entityType].texture);
                         }
-                        if (!level.entities[x, y].collidable)
+                        if (!Entity.entityTypes[level.entities[x, y].entityType].collidable)
                             Destroy(go.GetComponentInChildren<BoxCollider>());
                     }
                 }
