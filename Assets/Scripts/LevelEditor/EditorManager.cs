@@ -186,6 +186,12 @@ public class EditorManager : MonoBehaviour
                 return;
             }
 
+            if (level.tiles[x, y].moveableTile)
+            {
+                SetMoveableTileError($"The tile at {new Vector2(x, y)} is already moveable to position {level.tiles[x, y].tileMoveTo}");
+                return;
+            }
+
             moveableTileStart = new Vector2(x, y);
             moveableTileStartText.text = $"Start pos: {moveableTileStart}";
             moveableTileEditStage = MoveableTileEditStage.PlaceEnd;
