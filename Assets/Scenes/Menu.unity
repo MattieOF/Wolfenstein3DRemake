@@ -1278,6 +1278,7 @@ MonoBehaviour:
   levelNotFound: {fileID: 1851083187}
   customLevelNotFound: {fileID: 1211402185}
   titleLogo: {fileID: 607951388}
+  exitButton: {fileID: 991273225}
 --- !u!1 &637872704
 GameObject:
   m_ObjectHideFlags: 0

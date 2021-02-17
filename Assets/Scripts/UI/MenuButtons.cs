@@ -15,7 +15,7 @@ public class MenuButtons : MonoBehaviour
     public TMP_InputField levelToLoadInput;
     public TMP_InputField customLevelName;
     public GameObject campaignButton, editorButton, customLevelButton, fadeOut, editorMenu, campaignMenu, customLevelMenu, levelNotFound,
-        customLevelNotFound, titleLogo;
+        customLevelNotFound, titleLogo, exitButton;
 
     void Start()
     {
@@ -30,6 +30,9 @@ public class MenuButtons : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Quit();
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            exitButton.SetActive(false);
     }
 
     public void Rise()
