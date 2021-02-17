@@ -5892,7 +5892,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 279552242}
         m_TargetAssemblyTypeName: EditorManager, Assembly-CSharp
-        m_MethodName: Save
+        m_MethodName: SaveButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -273,13 +273,18 @@ public class EditorManager : MonoBehaviour
         else return;
     }
 
+    public void FlashLevelName()
+    {
+        levelNameBG.color = Color.red;
+        TweenC.Add(levelNameBG.gameObject, 1.5f, levelNameBGDefault);
+        TweenA.Add(levelNameBG.gameObject, 1f, levelNameBGDefault.a);
+    }
+
     public void PlayLevel()
     {
         if (LevelName == "Untitled Level")
         {
-            levelNameBG.color = Color.red;
-            TweenC.Add(levelNameBG.gameObject, 1.5f, levelNameBGDefault);
-            TweenA.Add(levelNameBG.gameObject, 1f, levelNameBGDefault.a);
+            FlashLevelName();
             return;
         }
 
@@ -287,6 +292,14 @@ public class EditorManager : MonoBehaviour
         LevelLoader.loadedFromEditor = true;
         LevelLoader.levelToLoad = LevelName;
         SceneManager.LoadScene(gameSceneName);
+    }
+
+    public void SaveButton()
+    {
+        if (LevelName == "Untitled Level")
+            FlashLevelName();
+        else
+            Save();
     }
 
     public void ToggleMoveableTileUI()
