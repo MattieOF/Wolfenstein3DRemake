@@ -13,14 +13,14 @@ public class SelectionBox : MonoBehaviour
     void Update()
     {
         Ray ray = editorCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit rayHit;
         Vector3 roundedLoc;
-        if (Physics.Raycast(ray, out rayHit))
+        if (Physics.Raycast(ray, out RaycastHit rayHit))
         {
             GetComponent<MeshRenderer>().enabled = true;
             roundedLoc = new Vector3(Mathf.FloorToInt(rayHit.point.x + 0.5f), 1, Mathf.FloorToInt(rayHit.point.z + 0.5f));
             transform.position = roundedLoc;
             tilePosText.SetPos((int)roundedLoc.x, (int)roundedLoc.z);
+            editorManager.HoverTile((int)roundedLoc.x, (int)roundedLoc.z);
 
             if (Input.GetMouseButton(0) && allowPlace)
             {

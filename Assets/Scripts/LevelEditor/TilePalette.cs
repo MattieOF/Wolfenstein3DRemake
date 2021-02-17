@@ -124,7 +124,6 @@ public class TilePalette : MonoBehaviour
 
         foreach (TileInfo tile in tiles)
         {
-            tile.texture = Resources.Load("Textures/" + tile.textureName, typeof(Texture)) as Texture;
             GameObject go = Instantiate(itemPrefab, tilesContent);
             go.GetComponent<RawImage>().texture = tile.texture;
             TilePaletteItem item = go.GetComponent<TilePaletteItem>();

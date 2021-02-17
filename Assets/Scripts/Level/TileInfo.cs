@@ -14,11 +14,6 @@ public class TileInfo : ScriptableObject
     [HideInInspector]
     public Texture texture;
 
-    [HideInInspector]
-    public bool moveableTile = false;
-    [HideInInspector]
-    public Vector2 tileMoveTo = new Vector2();
-
     public TileInfo()
     { }
 

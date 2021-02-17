@@ -3413,6 +3413,7 @@ GameObject:
   - component: {fileID: 1616255622}
   - component: {fileID: 1616255621}
   - component: {fileID: 1616255624}
+  - component: {fileID: 1616255625}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3482,6 +3483,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneName: Menu
   key: 109
+--- !u!114 &1616255625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616255620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9554d5d8c447f40922ff71b6263115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1627204049
 GameObject:
   m_ObjectHideFlags: 0

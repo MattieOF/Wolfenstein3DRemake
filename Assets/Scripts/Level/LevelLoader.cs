@@ -95,18 +95,17 @@ public class LevelLoader : MonoBehaviour
         {
             for (int y = 0; y < level.levelSize.y; y++)
             {
-                if (level.tiles[x][y] != null)
+                if (level.tiles[x, y] != null)
                 {
                     tilesCount++;
                     GameObject go = Instantiate(tilePrefab, levelObjects.transform);
                     go.transform.position = new Vector3(x, 1, y);
-                    level.tiles[x][y].texture = Resources.Load("Textures/" + level.tiles[x][y].textureName, typeof(Texture)) as Texture;
-                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.tiles[x][y].texture);
+                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", Tile.tileTypes[level.tiles[x, y].tileType].texture);
 
-                    if (level.tiles[x][y].moveableTile)
+                    if (level.tiles[x, y].moveableTile)
                     {
                         MoveableTile mt = go.AddComponent<MoveableTile>();
-                        mt.endPosition = level.tiles[x][y].tileMoveTo;
+                        mt.endPosition = level.tiles[x, y].tileMoveTo;
                         go.tag = "TileMoveable";
                     }
 
@@ -133,9 +132,9 @@ public class LevelLoader : MonoBehaviour
         {
             for (int y = 0; y < level.levelSize.y; y++)
             {
-                if (level.entities[x][y] != null)
+                if (level.entities[x, y] != null)
                 {
-                    if (level.entities[x][y].entityName == "PlayerStart")
+                    if (level.entities[x, y].entityName == "PlayerStart")
                     {
                         if (loadedPlayer)
                         {
@@ -150,15 +149,15 @@ public class LevelLoader : MonoBehaviour
                     } else
                     {
                         entityCount++;
-                        if (level.entities[x][y].isEnemy) enemyCount++;
-                        GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x][y].entityPrefabName), levelObjects.transform);
+                        if (level.entities[x, y].isEnemy) enemyCount++;
+                        GameObject go = Instantiate(Resources.Load<GameObject>("Entities/" + level.entities[x, y].entityPrefabName), levelObjects.transform);
                         go.transform.position = new Vector3(x, 1, y);
-                        if (level.entities[x][y].useEditorIcon)
+                        if (level.entities[x, y].useEditorIcon)
                         {
-                            level.entities[x][y].texture = Resources.Load("Textures/" + level.entities[x][y].editorIconName, typeof(Texture)) as Texture;
-                            go.GetComponentInChildren<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x][y].texture);
+                            level.entities[x, y].texture = Resources.Load("Textures/" + level.entities[x, y].editorIconName, typeof(Texture)) as Texture;
+                            go.GetComponentInChildren<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x, y].texture);
                         }
-                        if (!level.entities[x][y].collidable)
+                        if (!level.entities[x, y].collidable)
                             Destroy(go.GetComponentInChildren<BoxCollider>());
                     }
                 }
@@ -169,7 +168,7 @@ public class LevelLoader : MonoBehaviour
         {
             Debug.LogWarning("No player starts in the level, so the player is spawned at the center of the level");
             playerObject = Instantiate(playerPrefab);
-            playerPrefab.transform.localPosition = new Vector3(level.tiles.Length / 2, 1, level.tiles[0].Length / 2); // Spawn in middle of the level
+            playerPrefab.transform.localPosition = new Vector3(level.levelSize.x / 2, 1, level.levelSize.y / 2); // Spawn in middle of the level
         }
     }
 

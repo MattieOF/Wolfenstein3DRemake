@@ -25,7 +25,7 @@ public class EditorManager : MonoBehaviour
     public Image levelNameBG;
     public Color levelNameBGDefault;
     public GameObject moveableTileUI, moveableTileError;
-    public TextMeshProUGUI moveableTileErrorText, moveableTileStartText, moveableTileEndText;
+    public TextMeshProUGUI moveableTileErrorText, moveableTileStartText, moveableTileEndText, moveableTileNotif;
 
     [Header("Asset References")]
     public GameObject tilePrefab;
@@ -38,7 +38,7 @@ public class EditorManager : MonoBehaviour
     private List<GameObject> objects = new List<GameObject>();
 
     private MoveableTileEditStage moveableTileEditStage = MoveableTileEditStage.None;
-    private Vector2 moveableTileStart, moveableTileEnd;
+    private Vector2 moveableTileStart, moveableTileEnd, currentHover = Vector2.zero;
 
     // [Header("Level Properties")]
     public string LevelName
@@ -123,12 +123,11 @@ public class EditorManager : MonoBehaviour
         {
             for (int y = 0; y < level.levelSize.y; y++)
             {
-                if (level.tiles[x][y] != null)
+                if (level.tiles[x, y] != null)
                 {
                     GameObject go = Instantiate(tilePrefab);
                     go.transform.position = new Vector3(x, 1, y);
-                    level.tiles[x][y].texture = Resources.Load("Textures/" + level.tiles[x][y].textureName, typeof(Texture)) as Texture;
-                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.tiles[x][y].texture);
+                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", Tile.tileTypes[level.tiles[x, y].tileType].texture);
                     objects.Add(go);
                 }
             }
@@ -141,12 +140,12 @@ public class EditorManager : MonoBehaviour
         {
             for (int y = 0; y < level.levelSize.y; y++)
             {
-                if (level.entities[x][y] != null)
+                if (level.entities[x, y] != null)
                 {
                     GameObject go = Instantiate(tilePrefab);
                     go.transform.position = new Vector3(x, 1, y);
-                    level.entities[x][y].texture = Resources.Load("Textures/" + level.entities[x][y].editorIconName, typeof(Texture)) as Texture;
-                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x][y].texture);
+                    level.entities[x, y].texture = Resources.Load("Textures/" + level.entities[x, y].editorIconName, typeof(Texture)) as Texture;
+                    go.GetComponent<MeshRenderer>().materials[0].SetTexture("_MainTex", level.entities[x, y].texture);
                     objects.Add(go);
                 }
             }
@@ -205,9 +204,7 @@ public class EditorManager : MonoBehaviour
             if (!MoveableTilePathValid()) return;
 
             Debug.Log($"Marked tile at {new Vector2((int)moveableTileStart.x, (int)moveableTileStart.y)} as moveable to location {new Vector2(x, y)}");
-            level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].moveableTile = true;
-            level.tiles[(int)moveableTileStart.x][(int)moveableTileStart.y].tileMoveTo = new Vector2(x, y);
-            level.AddMoveableTileEndPos(x, y);
+            level.SetTileMoveable((int)moveableTileStart.x, (int)moveableTileStart.y, x, y);
             moveableTileEditStage = MoveableTileEditStage.None;
             ToggleMoveableTileUI();
             return;
@@ -229,7 +226,9 @@ public class EditorManager : MonoBehaviour
 
     public void PlaceTile(Vector3 location)
     {
-        level.SetTileAt((int)location.x, (int)location.z, tilePalette.selectedTile);
+        Tile t = new Tile();
+        t.tileType = tilePalette.selectedTile.name;
+        level.SetTileAt((int)location.x, (int)location.z, t);
 
         GameObject go = Instantiate(tilePrefab);
         go.transform.position = location;
@@ -251,6 +250,8 @@ public class EditorManager : MonoBehaviour
     public void RemoveItem(Vector3 location)
     {
         if (!level.ItemExistsAt((int)location.x, (int)location.z)) return;
+        if (level.tiles[(int)location.x, (int)location.z] != null && level.tiles[(int)location.x, (int)location.z].moveableTile)
+            level.moveableTileEndPositions.Remove(new Vector2((int)location.x, (int)location.y));
         level.RemoveItemAt((int)location.x, (int)location.z);
 
         Collider[] colliders = Physics.OverlapSphere(location, 0.2f);
@@ -313,5 +314,20 @@ public class EditorManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void HoverTile(int x, int y)
+    {
+        if (currentHover.x == x && currentHover.y == y) return;
+
+        if (level.tiles[x, y] == null)
+        {
+            moveableTileNotif.text = "Tile is not moveable";
+            return;
+        }
+
+        if (level.tiles[x, y].moveableTile) moveableTileNotif.text = "Tile is moveable"; else moveableTileNotif.text = "Tile is not moveable";
+
+        currentHover = new Vector2(x, y);
     }
 }
