@@ -260,8 +260,17 @@ public class EditorManager : MonoBehaviour
     public void RemoveItem(Vector3 location)
     {
         if (!level.ItemExistsAt((int)location.x, (int)location.z)) return;
+
+        if (moveableTileEditStage != MoveableTileEditStage.None)
+        {
+            if (level.tiles[(int)location.x, (int)location.z] != null && level.tiles[(int)location.x, (int)location.z].moveableTile)
+            {
+
+            }
+        }
+
         if (level.tiles[(int)location.x, (int)location.z] != null && level.tiles[(int)location.x, (int)location.z].moveableTile)
-            level.moveableTileEndPositions.Remove(new Vector2((int)location.x, (int)location.y));
+            level.moveableTileEndPositions.Remove(level.tiles[(int)location.x, (int)location.z].tileMoveTo);
         level.RemoveItemAt((int)location.x, (int)location.z);
 
         Collider[] colliders = Physics.OverlapSphere(location, 0.2f);
